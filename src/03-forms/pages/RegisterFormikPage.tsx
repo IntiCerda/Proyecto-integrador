@@ -6,9 +6,6 @@ import { MyTextInput } from '../components';
 
 export const RegisterFormikPage = () => {
 
-   
-        
-   
 
     return (
         <div>
@@ -74,17 +71,12 @@ export const RegisterFormikPage = () => {
                         />
 
                         
-                        <button type="submit">Crear</button>
+                        <button type="submit">Registrarse</button>
                 
                         <button type="button" onClick={ handleReset }>Borrar</button>
                         
                     </Form>
-                )}
-            
-            
-
-
-            
+                )}          
                 
             </Formik>
 

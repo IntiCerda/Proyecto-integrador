@@ -18,6 +18,7 @@ import {
   
   
   import logo from '../logo.svg';
+import { LoginUser } from '../03-forms/pages/LoginUser';
   
   export const Navigation = () => {
     return (
@@ -42,6 +43,9 @@ import {
                 <NavLink to="/formik-components" activeClassName="nav-active" exact>Formik Components</NavLink>
     </li>*/}
               <li>
+                <NavLink to="/login-user" activeClassName="nav-active" exact>Iniciosesion</NavLink>
+              </li>
+              <li>
                 <NavLink to="/formik-register" activeClassName="nav-active" exact>Registro</NavLink>
                </li>
                <li>
@@ -59,6 +63,9 @@ import {
           <Switch>
             <Route path="/register">
               <RegisterPage />
+            </Route>
+            <Route path="/login-user">
+              <LoginUser />
             </Route>
             <Route path="/formik-basic">
               <FormikBasicPage />
