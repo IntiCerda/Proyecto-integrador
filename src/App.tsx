@@ -25,6 +25,7 @@ function App() {
         <AppRouter />
     </AuthContext.Provider>
   );
+  
 }
 
 export default App;

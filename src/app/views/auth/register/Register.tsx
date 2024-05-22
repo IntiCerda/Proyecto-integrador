@@ -7,6 +7,7 @@ import { AuthService } from "../../../services/auth/AuthService";
 import { AuthContext } from "../../store/contexts/AuthContext";
 import { AuthCard } from "../components/authCard/AuthCard";
 
+
 export function Register (){
 
     const { distpachUser }: any = useContext(AuthContext);
@@ -90,7 +91,7 @@ export function Register (){
 
         <div className="mt-3 mb-3 text-center">
            <h6> Ya tienes una cuenta? </h6>
-          <Link to="/auth/login">Iniciar</Link>
+          <Link to="/routes">Iniciar Sesión</Link>
         </div>
       </form>
             </AuthCard>
@@ -98,5 +99,6 @@ export function Register (){
         </div>
     )
 
+    //nombre, apellido, rut?, correo, contraseña, contraseña2 
 
 }

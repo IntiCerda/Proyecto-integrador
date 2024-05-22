@@ -5,6 +5,9 @@ import { AuthContext } from "../views/store/contexts/AuthContext"
 import { PrivateRouter } from "./PrivateRouter"
 import { DashboardRouter } from "../views/dashboard/DashboardRouter"
 import { Register } from "../views/auth/register/Register"
+import { RegisterPage } from "../../03-forms/pages"
+import { Home } from "../views/dashboard/home/Home"
+import { Navigation } from "../../routes/Navigation"
 
 
 interface Context {
@@ -27,6 +30,9 @@ export function AppRouter(){
             <Switch>
                 <Route path ='/auth' component={AuthRouter} />
                 <Route path ='/auth/register' component={Register} />
+                <Route path ='/03-forms/pages' component={RegisterPage} />
+                <Route path ='/dashboard/home' component={Home} />
+                <Route path ='/routes' component={Navigation} />
 
                 <PrivateRouter 
                     loggedIn={user?.loggedIn}
