@@ -1,11 +1,11 @@
-import { AuthCard } from "../components/authCard/AuthCard";
-import logo from '../../../assets/img/logo.png'
-import accountIcon from '../../../assets/icons/account.svg'
-import passwordIcon from '../../../assets/icons/password.svg'
 import React, { useContext, useState } from "react";
 import { Link } from "react-router-dom";
-import { AuthContext } from "../../store/contexts/AuthContext";
+import accountIcon from '../../../assets/icons/account.svg';
+import passwordIcon from '../../../assets/icons/password.svg';
+import logo from '../../../assets/img/logo.png';
 import { AuthService } from "../../../services/auth/AuthService";
+import { AuthContext } from "../../store/contexts/AuthContext";
+import { AuthCard } from "../components/authCard/AuthCard";
 
 export function Register (){
 
@@ -38,19 +38,16 @@ export function Register (){
           />
         </div>
 
+
         <div className="mb-2 p-1 d-flex border rounded">
           <div className="mx-2 mt-1"> 
-            <img 
-              className="img-fluid"
-              src={accountIcon}
-              alt="iconUser" />
           </div>
           <input
             autoFocus
             className="form-control txt-input"
-            name="correo"
-            type="email"
-            placeholder="gege@gege.com"
+            name="nombre"
+            type="name"
+            placeholder="nombre"
             onChange={ e => handleChange(e) }
           />
         </div>
@@ -87,17 +84,13 @@ export function Register (){
         </div>
         <div className="d-grid gap-2">
           <button type="submit" className="btn btn-primary">
-            Iniciar Sesión
+            Registrarse
           </button>
         </div>
 
         <div className="mt-3 mb-3 text-center">
-          <Link to="/auth/recover">Olvidaste la contraseña?</Link>
-        </div>
-
-        <div className="mt-3 mb-3 text-center">
-           <h6>No tienes una cuenta</h6>
-          <Link to="/auth/register">Registrar</Link>
+           <h6> Ya tienes una cuenta? </h6>
+          <Link to="/auth/login">Iniciar</Link>
         </div>
       </form>
             </AuthCard>

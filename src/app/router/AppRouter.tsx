@@ -4,6 +4,7 @@ import { useContext } from "react"
 import { AuthContext } from "../views/store/contexts/AuthContext"
 import { PrivateRouter } from "./PrivateRouter"
 import { DashboardRouter } from "../views/dashboard/DashboardRouter"
+import { Register } from "../views/auth/register/Register"
 
 
 interface Context {
@@ -25,12 +26,14 @@ export function AppRouter(){
         <Router>
             <Switch>
                 <Route path ='/auth' component={AuthRouter} />
+                <Route path ='/auth/register' component={Register} />
+
                 <PrivateRouter 
                     loggedIn={user?.loggedIn}
                     component={DashboardRouter}
                 />
-
-                <Redirect to="dashboard/home" />
+                
+                <Redirect to="/dashboard/home" />
             </Switch>
         </Router>
     )
