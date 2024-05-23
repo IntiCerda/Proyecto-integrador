@@ -8,6 +8,7 @@ import { Register } from "../views/auth/register/Register"
 import { RegisterPage } from "../../03-forms/pages"
 import { Home } from "../views/dashboard/home/Home"
 import { Navigation } from "../../routes/Navigation"
+import { Recover } from "../views/auth/recover/Recover"
 
 
 interface Context {
@@ -33,6 +34,7 @@ export function AppRouter(){
                 <Route path ='/03-forms/pages' component={RegisterPage} />
                 <Route path ='/dashboard/home' component={Home} />
                 <Route path ='/routes' component={Navigation} />
+                <Route path ='/auth/recover' component={Recover} />
 
                 <PrivateRouter 
                     loggedIn={user?.loggedIn}
