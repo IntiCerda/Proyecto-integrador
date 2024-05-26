@@ -11,7 +11,7 @@ import {
 } from '../03-forms/pages';
 import logo from '../app/assets/img/logo.png';
 import { LoginUser } from '../03-forms/pages/LoginUser';
-import { Login } from '../app/views/auth/login/Login';
+import  Login  from '../app/views/auth/login/Login';
 import { AppRouter } from '../app/router/AppRouter';
 import App from '../App';
 

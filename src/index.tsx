@@ -4,11 +4,19 @@ import './index.css';
 import 'bootstrap/dist/css/bootstrap.min.css'
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+import { ApolloProvider, InMemoryCache } from '@apollo/client';
+import { ApolloClient } from '@apollo/client';
+
+
+const client = new ApolloClient({
+  uri: "http://localhost:3001/",
+  cache: new InMemoryCache()
+});
 
 ReactDOM.render(
-  <React.StrictMode>
+  <ApolloProvider client ={client} >
     <App />
-  </React.StrictMode>,
+  </ApolloProvider>,
   document.getElementById('root')
 );
 
