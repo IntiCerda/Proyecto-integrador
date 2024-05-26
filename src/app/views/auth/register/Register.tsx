@@ -1,113 +1,101 @@
-import React from "react";
-import * as Yup from 'yup';
-import { Form, Formik } from "formik";
-import { MyTextInput } from "../components/MyTextInput";
-import logo from '../../../assets/img/logo.png'
-
-import { Link } from "react-router-dom";
-import { useHistory } from "react-router-dom";
-import { AuthCard } from "../components/authCard/AuthCard";
-
+import React, { useState, ChangeEvent, FormEvent } from "react";
 
 export const Register = () => {
-    const history = useHistory();
+  const [formData, setFormData] = useState({
+    name: "",
+    lastName: "",
+    email: "",
+    password1: "",
+    password2: "",
+  });
 
-    return(
-        <div>
-          <h1> Registro de Usuario (prueba) </h1>
-          
-          <Formik
-            initialValues={{
-              name: '',
-              lastName: '',
-              email: '',
-              password1: '',
-              password2: ''
-            }}
-            onSubmit={( values) => {
-              console.log(values)
-              history.push("/dashboard/home");
-            }}
-            validationSchema={
-              Yup.object({
-                name: Yup.string()
-                                .min(2, 'El Nombre debe de ser de 3 caracteres o más')
-                                .required('Requerido'),
-                lastName: Yup.string()
-                                .min(2, 'El Nombre debe de ser de 3 caracteres o más')
-                                .required('Requerido'),
-                email: Yup.string()
-                                .email('Revise el formato del correo')
-                                .required('Requerido'),
-                password1: Yup.string()
-                                .min(6,'Minimo de 6 caracteres')
-                                .required('Requerido'),
-                password2: Yup.string()
-                                .oneOf([ Yup.ref('password1') ], 'Contraseña no coinciden')
-                                .required('Requerido'),
-              })
-            }
+  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
 
-          >
-        <AuthCard>
-        <Form>
-        <div className="text-center mb-2">
-          <img
-            className="img-fluid"
-            src={logo}
-            alt="logo"
-          />
-        </div>
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
 
-        <MyTextInput
-            label="Nombre"
-            name="name"
-            placeholder="Nombre"
-          />
+    const { name, lastName, email, password1 } = formData;
 
-        <MyTextInput
-            label="Apellido"
-            name="lastName"
-            placeholder="apellido"
-          />
-        
-        <MyTextInput
-            label="Correo"
-            name="email"
-            type="email"
-            placeholder="gege@gege.com"
+    const query = `
+      mutation {
+        register(registerInput: {
+          name: "${name}",
+          lastName: "${lastName}",
+          email: "${email}",
+          password: "${password1}"
+        }) {
+          id
+          name
+          lastName
+          email
+        }
+      }
+    `;
+
+    try {
+      const response = await fetch("http://localhost:4000/graphql", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ query }),
+      });
+
+      const data = await response.json();
+      console.log(data);
+    } catch (error) {
+      console.error("Error:", error);
+    }
+  };
+
+  return (
+    <div>
+      <h1>Registro de Usuario (prueba)</h1>
+      <form onSubmit={handleSubmit}>
+        <input
+          type="text"
+          name="name"
+          placeholder="Nombre"
+          value={formData.name}
+          onChange={handleChange}
+          autoComplete="name"
         />
-
-        <MyTextInput
-            label="Contraseña"
-            name="password1"
-            type="password"
-            placeholder="*****"
+        <input
+          type="text"
+          name="lastName"
+          placeholder="Apellido"
+          value={formData.lastName}
+          onChange={handleChange}
+          autoComplete="name"
         />
-
-        <MyTextInput
-            label="Confirmar contraseña"
-            name="password2"
-            type="password"
-            placeholder="*****"
+        <input
+          type="email"
+          name="email"
+          placeholder="Correo"
+          value={formData.email}
+          onChange={handleChange}
+          autoComplete="email"
         />
-        
-        
-        <div className="d-grid gap-2">
-          <button type="submit" className="btn btn-primary">
-            Registrarse
-          </button>
-        </div>
-
-        <div className="mt-3 mb-3 text-center">
-           <h6> Ya tienes una cuenta? </h6>
-          <Link to="/auth/login">Iniciar Sesión</Link>
-        </div>
-      </Form>
-      </AuthCard>
-
-    </Formik>
+        <input
+          type="password"
+          name="password1"
+          placeholder="Contraseña"
+          value={formData.password1}
+          onChange={handleChange}
+          autoComplete="new-password"
+        />
+        <input
+          type="password"
+          name="password2"
+          placeholder="Confirmar contraseña"
+          value={formData.password2}
+          onChange={handleChange}
+          autoComplete="new-password"
+        />
+        <button type="submit">Registrarse</button>
+      </form>
     </div>
-    //nombre, apellido, rut?, correo, contraseña, contraseña2 
-    )
-}
+  );
+};
