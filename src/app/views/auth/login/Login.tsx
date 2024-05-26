@@ -5,22 +5,32 @@ import passwordIcon from '../../../assets/icons/password.svg'
 import React, { useContext, useState } from "react";
 import { Link, useHistory } from "react-router-dom";
 import { AuthContext } from "../../store/contexts/AuthContext";
-import { AuthService } from "../../../services/auth/AuthService";
 
 export function Login (){
-
     const { distpachUser }: any = useContext(AuthContext);
     const [ auth, setAuth ] = useState({ email: '', password: ''})
     const history = useHistory();
 
-    const handleSubmit = async (e:React.ChangeEvent<HTMLFormElement>) =>{
-        try{
-          e.preventDefault();
-          const resp = await AuthService.login(auth);
-          console.log(resp)
-          if(resp.success){
-            sessionStorage.setItem('user', JSON.stringify({...resp.date, loggedIn: true }))
-            distpachUser({type:'login', payload: resp.date})
+    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+      e.preventDefault();
+      try {
+          const { email, password } = auth;
+          const resp = await fetch('http://localhost:4000/auth/login', {
+              method: 'POST',
+              headers: {
+                  'Content-Type': 'application/json',
+              },
+              body: JSON.stringify({
+                  email: email,
+                  password: password,
+              }),
+          });
+          const data = await resp.json();
+          console.log(data);
+          if (data.token) {
+              sessionStorage.setItem('token', data.token);
+
+
             history.replace('/dashboard/home')
 
           }
@@ -62,7 +72,7 @@ export function Login (){
           <input
             autoFocus
             className="form-control txt-input"
-            name="correo"
+            name="email"
             type="email"
             placeholder="gege@gege.com"
             onChange={ e => handleChange(e) }
@@ -78,7 +88,7 @@ export function Login (){
           </div>
           <input
             className="form-control txt-input"
-            name="contraseña"
+            name="password"
             type="password"
             placeholder="******"
             onChange={ e => handleChange(e) }
