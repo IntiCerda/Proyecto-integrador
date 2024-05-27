@@ -1,6 +1,8 @@
 import React, { useState, ChangeEvent, FormEvent } from "react";
+import { Link, useHistory } from "react-router-dom";
 
 export const Register = () => {
+  const history = useHistory();
   const [formData, setFormData] = useState({
     name: "",
     lastName: "",
@@ -45,6 +47,10 @@ export const Register = () => {
 
       const data = await response.json();
       console.log(data);
+
+      history.replace('/auth/login')
+
+      
     } catch (error) {
       console.error("Error:", error);
     }
